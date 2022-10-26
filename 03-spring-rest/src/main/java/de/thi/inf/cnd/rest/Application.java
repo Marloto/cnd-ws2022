@@ -1,5 +1,6 @@
 package de.thi.inf.cnd.rest;
 
+import de.thi.inf.cnd.rest.model.Comment;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
