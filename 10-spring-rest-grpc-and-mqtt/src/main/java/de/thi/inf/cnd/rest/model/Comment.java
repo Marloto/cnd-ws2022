@@ -5,29 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-@Entity
 @Data
 @AllArgsConstructor
-public class Post {
+@Entity
+public class Comment {
     @Id
     @Setter(AccessLevel.NONE)
     private UUID id;
-    private String title;
-    private String content;
+    private String text;
     private LocalDateTime date;
     private String userRef;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Comment> comments;
-
-    public Post() {
+    public Comment() {
         this.id = UUID.randomUUID();
-        this.comments = new ArrayList<>();
     }
 }

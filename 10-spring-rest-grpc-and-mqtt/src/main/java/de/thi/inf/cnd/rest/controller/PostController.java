@@ -2,6 +2,7 @@ package de.thi.inf.cnd.rest.controller;
 
 import de.thi.inf.cnd.rest.model.Post;
 import de.thi.inf.cnd.rest.repository.PostRepository;
+import de.thi.inf.cnd.rest.services.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class PostController {
     @Autowired
     private PostRepository repository;
 
+    @Autowired
+    private PublisherService service;
+
     @GetMapping
     public Iterable<Post> getAllPosts() {
         return repository.findAll();
@@ -35,7 +39,9 @@ public class PostController {
 
     @PostMapping
     public Post createPost(@RequestBody Post post) {
-        return repository.save(post);
+        Post save = repository.save(post);
+        service.publishNewPost(save);
+        return save;
     }
 
     @PutMapping("/{id}")
