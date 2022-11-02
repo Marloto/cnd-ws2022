@@ -20,52 +20,48 @@ import java.util.UUID;
 // -> Alles mitsenden, was notwendig ist
 // -> oder... eine möglichkeit die Sitzung wieder zu identifizieren
 
+
 @RestController
-@RequestMapping(path = "/post")
+@RequestMapping("/posts")
 public class PostController {
+    @Autowired
+    private PostRepository repository;
 
-    private final PostRepository repository;
-
-    public PostController(PostRepository repository) {
-        this.repository = repository;
-    }
-
-    @GetMapping("/")
+    @GetMapping
     public Iterable<Post> getAllPosts() {
         return repository.findAll();
-        // ggf. sind hiermit Informationen verbunden die nicht
-        // über die Anfrage herausgegeben werden dürfen
     }
 
     @GetMapping("/{id}")
-    public Post getOnePost(@PathVariable  UUID id) {
+    public Post getOnePost(@PathVariable UUID id) {
         Optional<Post> post = repository.findById(id);
         if(post.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return post.get();
-        // ggf. sind hiermit Informationen verbunden die nicht
-        // über die Anfrage herausgegeben werden dürfen
     }
 
-    @PostMapping("/")
-    public ResponseEntity createPost(@RequestBody Post post) {
-        // ID könnte vergeben sein,
-        // bestimmte Informationen sind überflüssig
-        // TODO: check post object
-        repository.save(post);
-        // TODO: Location
-        return new ResponseEntity(HttpStatus.CREATED);
+    @PostMapping
+    public Post createPost(@RequestBody Post post) {
+        return repository.save(post);
     }
 
-    // Element suchen, ggf. nicht finden, felder aktualisieren
-    // -> welcher Felder sind überhaupt aktualisierbar
-    public Post updatePost(UUID id, Post post) {
-        return null;
+    @PutMapping("/{id}")
+    public Post updatePost(@PathVariable UUID id, @RequestBody Post post) {
+        Optional<Post> oldPost = repository.findById(id);
+        if(oldPost.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return repository.save(oldPost.map(p -> {
+            p.setContent(post.getContent());
+            p.setTitle(post.getTitle());
+            return p;
+        }).get());
     }
 
-    // Ggf. suchen, und wenn gefunden löschen
-    public void deletePost(UUID id) {
-        return;
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletePost(@PathVariable UUID id) {
+        repository.deleteById(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
