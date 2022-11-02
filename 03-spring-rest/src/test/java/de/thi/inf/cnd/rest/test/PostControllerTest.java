@@ -3,6 +3,7 @@ package de.thi.inf.cnd.rest.test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.thi.inf.cnd.rest.Application;
 import de.thi.inf.cnd.rest.model.Post;
+import de.thi.inf.cnd.rest.repository.PostRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,29 +33,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         locations = "classpath:application-integrationtest.properties")
 
 public class PostControllerTest {
-//    @Autowired
-//    private MockMvc mvc;
-//    @Autowired
-//    private PostRepository repo;
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    private PostRepository repo;
 
     @Before
     public void cleanUp() {
-//        repo.deleteAll();
+        repo.deleteAll();
     }
 
     @Test
     public void testCreatePost() throws Exception {
-//        Post post = new Post();
-//        post.setTitle("Dies ist ein Test");
-//        post.setContent("Ein Testtext");
-//        mvc.perform(post("/posts")
-//                .content(asJsonString(post))
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Dies ist ein Test"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("Ein Testtext"));
+        Post post = new Post();
+        post.setTitle("Dies ist ein Test");
+        post.setContent("Ein Testtext");
+        mvc.perform(post("/posts")
+                .content(asJsonString(post))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Dies ist ein Test"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("Ein Testtext"));
     }
 
     @Test

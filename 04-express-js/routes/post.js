@@ -18,14 +18,14 @@ router.post("/posts", async (req, res) => {
     res.send(post)
 })
 
-router.get("/posts/:id", async (req, res) => {
-	const post = await Post.findOne({ _id: req.params.id })
-    if(post) {
-	    res.send(post)
-    } else {
-        res.status(404).send({error: "Post doesn't exist!"});
-    }
-})
+// router.get("/posts/:id", async (req, res) => {
+// 	const post = await Post.findOne({ _id: req.params.id })
+//     if(post) {
+// 	    res.send(post)
+//     } else {
+//         res.status(404).send({error: "Post doesn't exist!"});
+//     }
+// })
 
 router.get("/posts/:id", async (req, res) => {
 	try {
