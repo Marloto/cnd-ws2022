@@ -1,7 +1,10 @@
-package de.thi.inf.cnd.rest.controller;
+package de.thi.inf.cnd.hexa.controller;
 
-import de.thi.inf.cnd.rest.model.Post;
-import de.thi.inf.cnd.rest.repository.PostRepository;
+import de.thi.inf.cnd.hexa.adapter.rest.dto.CreatePostRequest;
+import de.thi.inf.cnd.hexa.adapter.rest.dto.PostResponse;
+import de.thi.inf.cnd.hexa.domain.PostService;
+import de.thi.inf.cnd.hexa.model.Post;
+import de.thi.inf.cnd.hexa.services.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +20,7 @@ import java.util.UUID;
 @RequestMapping("/posts")
 public class PostController {
     @Autowired
-    private PostRepository repository;
+    private PostService service;
 
     @GetMapping
     public Iterable<Post> getAllPosts() {
@@ -34,12 +37,13 @@ public class PostController {
     }
 
     @PostMapping
-    public Post createPost(@RequestBody Post post) {
-        /** Wie über MQTT publizieren, dass eine neue Nachricht erzeugt wurde? **/
-        /** Client wrappen (singleton), für die Verbindung - möglichkeiten schaffen
-         *  schaffen um das ereignis dann an diesen singleton weiterzugeben,
-         *  damit er das publiziert **/
-        return repository.save(post);
+    public PostResponse createPost(@RequestBody CreatePostRequest post) {
+        Post save = service.createNewPost(title, content);
+        PostResponse resp = new PostResponse();
+        resp.setId(save.getId());
+        resp.setContent(save.getContent());
+        resp.setTitle(save.getTitle());
+        return resp;
     }
 
     @PutMapping("/{id}")

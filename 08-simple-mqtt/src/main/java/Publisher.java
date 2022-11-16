@@ -8,7 +8,7 @@ public class Publisher {
     public static void main(String[] args) {
         String topic = "example";
         int qos = 2;
-        String broker = "tcp://codestack.de:1883";
+        String broker = "tcp://localhost:1883";
         String clientId = "ExampleClient";
         MemoryPersistence persistence = new MemoryPersistence();
 

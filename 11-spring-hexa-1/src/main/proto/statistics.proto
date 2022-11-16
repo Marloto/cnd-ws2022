@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package de.thi.inf.cnd.grpc;
+
+option java_multiple_files = true;
+option java_package = "de.thi.inf.cnd.hexa.grpc";
+option java_outer_classname = "PostProto";
+
+service StatisticService {
+    rpc CountComments (CountCommentsRequest) returns (CountCommentsResponse) {
+    }
+    rpc ListPostIds (ListPostIdsRequest) returns (ListPostIdsResponse) {
+    }
+}
+
+message CountCommentsRequest {
+    string postId = 1;
+}
+
+message CountCommentsResponse {
+    int32 count = 1;
+}
+
+message ListPostIdsRequest {
+
+}
+
+message ListPostIdsResponse {
+    repeated string postId = 1;
+}
