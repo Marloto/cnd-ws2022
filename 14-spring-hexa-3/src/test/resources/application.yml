@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: hexa-posts-server
+  datasource:
+    url: jdbc:h2:mem:test
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+grpc:
+  server:
+    port: 9898
+
+mqtt:
+  broker: tcp://localhost:1883
+  client: ExampleClient
+  topic: example

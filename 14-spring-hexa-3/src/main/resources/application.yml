@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: hexa-posts-server
+grpc:
+  server:
+    port: 9898
+
+mqtt:
+  broker: tcp://localhost:1883
+  client: ExampleClient
+  topic: example

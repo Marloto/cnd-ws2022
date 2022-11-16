@@ -1,0 +1,28 @@
+version: "3"
+
+# -> was wäre im Fall des Beispiels hier zu starten?
+# -> message broker
+# -> datenbank
+# -> der dienst selbst
+# -> werkzeuge ggf. für dev
+# -> last verteilung / http proxy
+
+services:
+  foo:
+    image: nginx:1.21
+    ports:
+      - "12345:80"
+
+# -> docker run -p 12345:80 nginx:1.21
+# -> volumes
+# -> networks
+# -> env
+# -> arg
+# -> commands
+# -> entrypoints
+# -> build-konfiguration
+# -> depends
+# -> ips, dns...
+# -> (config)
+
+# -> (skalierung)
