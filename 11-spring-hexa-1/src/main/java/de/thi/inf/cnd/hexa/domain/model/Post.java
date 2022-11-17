@@ -1,4 +1,4 @@
-package de.thi.inf.cnd.hexa.model;
+package de.thi.inf.cnd.hexa.domain.model;
 
 import de.thi.inf.cnd.hexa.domain.model.Comment;
 import lombok.AccessLevel;

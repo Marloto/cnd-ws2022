@@ -1,7 +1,6 @@
-package de.thi.inf.cnd.hexa.services;
+package de.thi.inf.cnd.hexa.adapter.mqtt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.thi.inf.cnd.hexa.model.Post;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -53,8 +52,8 @@ public class PublisherService {
         }
     }
 
-    public void publishNewPost(Post post) {
-        this.publish(asJsonString(post));
+    public void publish(Object data) {
+        this.publish(asJsonString(data));
     }
 
     private void publish(String content) {

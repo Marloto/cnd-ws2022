@@ -1,5 +1,7 @@
 package de.thi.inf.cnd.hexa.ports.out;
 
-public interface MessagePort {
+import de.thi.inf.cnd.hexa.domain.model.Post;
+
+public interface PostEvents {
     public void publishNewPost(Post post);
 }
