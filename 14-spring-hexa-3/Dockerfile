@@ -6,6 +6,7 @@ COPY src /tmp/src/
 RUN mvn package
 
 FROM amazoncorretto:17-alpine3.13 AS app
+
 WORKDIR /app
 COPY --from=builder /tmp/target/hexa*.jar /app/app.jar
 COPY --from=builder /tmp/target/lib/ /app/lib
