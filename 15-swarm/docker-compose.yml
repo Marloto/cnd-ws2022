@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  app:
+    image: marloto/simple-express-js
+    # wie können volumes konfiguriert werden, was für möglichkeiten?
+    volumes:
+     - "./foo:/tmp/foo"
+     - "data:/tmp/bar"
+    ports:
+      - '3000:3000'
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=10.0.5.6,rw
+      device: ":/media/nfs"
