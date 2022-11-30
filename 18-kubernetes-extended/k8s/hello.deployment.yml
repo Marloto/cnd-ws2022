@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+  labels:
+    app: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+        - name: demo
+          image: marloto/express-example
+          ports:
+            - containerPort: 3000
+          resources:
+            # requests:
+            #   memory: "10Mi"
+            #   cpu: "100m"
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 3
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: 3000
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 3
