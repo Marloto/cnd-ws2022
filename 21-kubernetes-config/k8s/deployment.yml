@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: demo
+  labels:
+    app: demo
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+        - name: demo
+          image: marloto/simple-express-js:v1.3
+          ports:
+            - containerPort: 3000
+          env:
+            # - name: GREETING
+            #   value: 'Hello, Other!'
+            - name: GREETING
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-config
+                  key: greeting
