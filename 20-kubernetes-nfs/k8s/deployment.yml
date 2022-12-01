@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+  labels:
+    app: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      volumes:
+        - name: nfs-pv-storage
+          persistentVolumeClaim:
+            claimName: nfs-pv-claim
+      containers:
+        - name: demo
+          image: marloto/express-example
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - mountPath: "/root/test"
+              name: nfs-pv-storage
