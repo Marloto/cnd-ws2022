@@ -1,3 +1,4 @@
+# Beschreibt, wo die Daten her kommen oder hin sollen
 apiVersion: v1
 kind: PersistentVolume
 metadata:

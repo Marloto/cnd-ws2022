@@ -16,17 +16,29 @@ spec:
       labels:
         app: demo
     spec:
+      volumes:
+        - name: demo-config-volume
+          configMap:
+            name: demo-config
+            items:
+              - key: config
+                path: config.json
       containers:
         - name: demo
           image: marloto/simple-express-js:v1.3
           ports:
             - containerPort: 3000
-          env:
+          volumeMounts:
+            - mountPath: /usr/src/app/config/
+              name: demo-config-volume
+              readOnly: true
+          # env:
             # - name: GREETING
             #   value: 'Hello, Other!'
-            - name: GREETING
-              valueFrom:
-                configMapKeyRef:
-                  name: demo-config
-                  key: greeting
+            # - name: GREETING
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: demo-config
+            #       key: greeting
+
 # Aktualisierung von Ressourcen für Konfigurationen im laufenden Betrieb, wo sind die Grenzen?
