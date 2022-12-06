@@ -42,3 +42,4 @@ spec:
             #       key: greeting
 
 # Aktualisierung von Ressourcen für Konfigurationen im laufenden Betrieb, wo sind die Grenzen?
+# -> emptyDir als alternative nicht ausreichend?

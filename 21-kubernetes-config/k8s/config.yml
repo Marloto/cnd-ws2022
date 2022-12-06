@@ -3,5 +3,4 @@ kind: ConfigMap
 metadata:
   name: demo-config
 data:
-  config: |
-    {"greeting": "Hello, Mars!"}
+  greeting: 'Hello, Otherthing!'
