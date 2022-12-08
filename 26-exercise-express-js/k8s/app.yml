@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: express-demo
+  labels:
+    app: express-js-demo
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-js-demo
+  template:
+    metadata:
+      labels:
+        app: express-js-demo
+    spec:
+      containers:
+        - name: express-demo
+          image: marloto/express-js-demo:1.0
+          env:
+            # Use secret in real usage
+            - name: MONGO_DB_URL
+              value: mongodb://mongodb:27017/example
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: "100Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3

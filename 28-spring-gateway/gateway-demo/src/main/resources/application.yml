@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: sesa-gateway-example
+  cloud:
+    gateway:
+      routes:
+      - id: something
+        uri: lb://service01
+        predicates:
+        - Path=/something
+      - id: hello
+        uri: lb://service02
+        predicates:
+        - Path=/hello
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

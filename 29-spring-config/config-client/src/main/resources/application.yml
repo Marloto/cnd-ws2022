@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: development
+  application:
+    name: sesa01
+  config:
+    import: optional:configserver:http://localhost:8888
+
+logging:
+  level:
+    root: INFO

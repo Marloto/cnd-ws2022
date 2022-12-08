@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  app:
+    image: marloto/simple-express-js:v1.3
+    ports:
+      - "3000:3000"
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://127.0.0.1:12201"
+

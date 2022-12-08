@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hexa-database-config
+data:
+  MYSQL_USER: "user"
+  MYSQL_DATABASE: "somedb"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hexa-database-secrets
+stringData:
+  MYSQL_ROOT_PASSWORD: 2B62661B-D644-4A81-91DA-F0DB0961CDF4
+  MYSQL_PASSWORD: C1CD107B-AA58-498B-9D5A-9DBBF07B379F
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hexa-database-pv-claim
+spec:
+  storageClassName: database
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hexa-database
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: database
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hexa-database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - image: mysql:5.7
+          name: mysql
+          envFrom:
+            - configMapRef:
+                name: hexa-database-config
+            - secretRef:
+                name: hexa-database-secrets
+          ports:
+            - containerPort: 3306
+              name: database
+          volumeMounts:
+            - name: hexa-database-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: hexa-database-storage
+          persistentVolumeClaim:
+            claimName: hexa-database-pv-claim

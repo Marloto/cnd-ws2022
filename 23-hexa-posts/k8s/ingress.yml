@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: hexa-ingress
+spec:
+    ingressClassName: nginx
+    rules:
+      - host: localhost
+        http:
+          paths:
+            - backend:
+                service:
+                  name: hexa-posts
+                  port:
+                    number: 8080
+              path: /
+              pathType: Prefix
